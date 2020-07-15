@@ -1,0 +1,18 @@
+{
+    "users": [
+        {
+            "id": 1,
+            "firstName": "Marlon",
+            "lastName": "Martins Concenza",
+            "email": "marlon@gmail.com",
+            "document": "37751508844"
+        },
+        {
+            "id": 2,
+            "firstName": "Elza Carolina",
+            "lastName": "Raposo Concenza",
+            "email": "elza@gmail.com",
+            "document": "45678945522"
+        }
+    ]
+}
