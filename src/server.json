@@ -2,31 +2,17 @@
   "users": [
     {
       "id": 1,
-      "firstName": "Marlon",
-      "lastName": "Concenza",
-      "email": "marlon@gmail.com",
-      "document": "37751508892"
+      "firstName": "Teste",
+      "lastName": "SWR",
+      "email": "teste@teste.com",
+      "document": "12345678901"
     },
     {
       "id": 2,
-      "firstName": "Elza Carolina",
-      "lastName": "Raposo Concenza",
-      "email": "elza@gmail.com",
-      "document": "45678945522"
-    },
-    {
-      "firstName": "Andre",
-      "lastName": "Baitola",
-      "email": "andre@gmail.com",
-      "document": "432432423",
-      "id": 3
-    },
-    {
-      "id": 4,
-      "firstName": "Teste",
-      "lastName": "Criação de Usuário",
-      "email": "testecriacao@teste.com",
-      "document": "22222222"
+      "firstName": "Novo",
+      "lastName": "Teste",
+      "email": "novoteste@teste.com",
+      "document": "11111111111"
     }
   ]
 }

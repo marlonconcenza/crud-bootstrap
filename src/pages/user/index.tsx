@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Col, Container, Form, Card, Button } from 'react-bootstrap';
-import { RouteComponentProps, useHistory } from 'react-router-dom';
+import { RouteComponentProps, useHistory, useParams } from 'react-router-dom';
 
 import './style.css';
 import api from '../../services/api';
+import { useFetch } from '../../hooks/useFetch';
 
 interface User {
     id: number,
@@ -16,29 +17,20 @@ interface User {
 const User = ({ match }: RouteComponentProps) => {
 
     const history = useHistory();
+    const { id, action } = useParams();
 
-    const [user, setUser] = useState<User>();
     const [validated, setValidated] = useState(false);
-
     const inputFirstName = useRef<HTMLInputElement>(null);
     const inputLastName = useRef<HTMLInputElement>(null);
     const inputEmail = useRef<HTMLInputElement>(null);
     const inputDocument = useRef<HTMLInputElement>(null);
+    const isCreate = (action === "add");
+    const isUpdate = (action === "update");
+    const isRemove = (action === "remove");
+    
+    const { data } = useFetch<User>(`users/${id}`);
 
-    const { id, action } = match.params as any;
-    let userLabel: string;
-
-    useEffect(() => {
-        if (action !== "add" && id > 0) {
-            api.get(`/users/${id}`).then(response => {
-                if (response) {
-                    setUser(response.data);
-                }
-            });
-        }
-    }, [action, id]);
-
-    if (action !== "add" && !user) {
+    if (!isCreate && !data) {
         return (
             <Container className="containerUser">
                 Carregando...
@@ -46,9 +38,11 @@ const User = ({ match }: RouteComponentProps) => {
         );
     }
 
-    if (id > 0 && action === "update") {
+    let userLabel: string;
+
+    if (id > 0 && isUpdate) {
         userLabel = "Edição de Usuário";
-    } else if (user && id > 0 && action === "remove") {
+    } else if (data && id > 0 && isRemove) {
         userLabel = "Exclusão de Usuário";
     } else {
         userLabel = "Criação de Usuário";
@@ -73,10 +67,9 @@ const User = ({ match }: RouteComponentProps) => {
                 document: inputDocument.current?.value
             };
 
-            if(action === "add") {
+            if(isCreate) {
 
                 await api.post('/users', userForm).then((response) => {
-
                     if (response && response.data) {
                         history.push('/');
                     }
@@ -85,7 +78,7 @@ const User = ({ match }: RouteComponentProps) => {
                     alert(error);
                 });
 
-            } else if (action === "update") {
+            } else if (isUpdate) {
 
                 await api.put(`/users/${Number(id)}`, userForm).then((response) => {
 
@@ -98,6 +91,9 @@ const User = ({ match }: RouteComponentProps) => {
                 });
 
             } else {
+
+                if (!window.confirm('Confirma a exclusão?')) return;
+
                 await api.delete(`/users/${Number(id)}`).then((response) => {
 
                     if (response) {
@@ -127,8 +123,8 @@ const User = ({ match }: RouteComponentProps) => {
                                     type="text"
                                     size="sm"
                                     required
-                                    defaultValue={user?.firstName}
-                                    readOnly={action==="remove"}
+                                    defaultValue={data?.firstName}
+                                    readOnly={isRemove}
                                     maxLength={50}
                                 />
                                 <Form.Control.Feedback type="invalid">
@@ -144,8 +140,8 @@ const User = ({ match }: RouteComponentProps) => {
                                     type="text"
                                     size="sm"
                                     required
-                                    defaultValue={user?.lastName}
-                                    readOnly={action==="remove"}
+                                    defaultValue={data?.lastName}
+                                    readOnly={isRemove}
                                     maxLength={50}
                                 />
                                 <Form.Control.Feedback type="invalid">
@@ -161,8 +157,8 @@ const User = ({ match }: RouteComponentProps) => {
                                     type="email"
                                     size="sm"
                                     required
-                                    defaultValue={user?.email}
-                                    readOnly={action==="remove"}
+                                    defaultValue={data?.email}
+                                    readOnly={isRemove}
                                     maxLength={50}
                                 />
                                 <Form.Control.Feedback type="invalid">
@@ -178,8 +174,8 @@ const User = ({ match }: RouteComponentProps) => {
                                     type="number"
                                     size="sm"
                                     required
-                                    defaultValue={user?.document}
-                                    readOnly={action==="remove"}
+                                    defaultValue={data?.document}
+                                    readOnly={isRemove}
                                     maxLength={11}
                                 />
                                 <Form.Control.Feedback type="invalid">
@@ -188,8 +184,8 @@ const User = ({ match }: RouteComponentProps) => {
                             </Col>
                         </Card.Body>
                         <Card.Footer>
-                            <Button type="submit" variant={action === "remove" ? "danger" : "success"}>
-                                {action === "remove" ? "Excluir" : "Salvar"}
+                            <Button type="submit" variant={isRemove ? "danger" : "success"}>
+                                {isRemove ? "Excluir" : "Salvar"}
                             </Button>&nbsp;&nbsp;
                             <Button type="button" variant="primary" onClick={() => handleBack()}>
                                 Voltar

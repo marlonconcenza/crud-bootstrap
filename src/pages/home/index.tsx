@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Container, Table, Button, Row } from 'react-bootstrap';
 
-import api from '../../services/api';
-
+import { useFetch } from '../../hooks/useFetch';
 import './style.css';
 
 interface User {
@@ -18,16 +17,17 @@ const Home = () => {
 
     const history = useHistory();
 
-    const [users, setUsers] = useState<User[]>();
+    //const [users, setUsers] = useState<User[]>();
     
-    useEffect(() => {
+    // useEffect(() => {
+    //     // api.get('/users').then(response => {
+    //     //     if (response) {
+    //     //         setUsers(response.data);
+    //     //     }
+    //     // });
+    // }, []);
 
-        api.get('/users').then(response => {
-            if (response) {
-                setUsers(response.data);
-            }
-        });
-    }, []);
+    const { data } = useFetch<User[]>('users');
 
     const handleClick = (action: string, id?: number) => {
 
@@ -39,7 +39,7 @@ const Home = () => {
         }
     };
 
-    if (!users) {
+    if (!data) {
         return (
             <Container className="containerHome">
                 <p>Carregando...</p>
@@ -64,7 +64,7 @@ const Home = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {users.map(user => (
+                            {data.map(user => (
                                 <tr key={user.id}>
                                     <td>{user.id}</td>
                                     <td>{user.firstName}</td>
