@@ -9,7 +9,7 @@
 
 ## Sobre este projeto
 
-Este projeto foi contruído para aplicar os conceitos da biblioteca [React Bootstrap](https://react-bootstrap.github.io).
+Este projeto foi contruído para aplicar os conceitos da biblioteca [React Bootstrap](https://react-bootstrap.github.io).<br />
 Para criar o projeto foi utilizado o [Create React App](https://github.com/facebook/create-react-app).
 
 
