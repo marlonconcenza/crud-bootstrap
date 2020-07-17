@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { Container, Table, Button, Row } from 'react-bootstrap';
 
@@ -16,17 +16,6 @@ interface User {
 const Home = () => {
 
     const history = useHistory();
-
-    //const [users, setUsers] = useState<User[]>();
-    
-    // useEffect(() => {
-    //     // api.get('/users').then(response => {
-    //     //     if (response) {
-    //     //         setUsers(response.data);
-    //     //     }
-    //     // });
-    // }, []);
-
     const { data } = useFetch<User[]>('users');
 
     const handleClick = (action: string, id?: number) => {
@@ -55,10 +44,10 @@ const Home = () => {
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
+                                <th>Nome</th>
+                                <th>Sobrenome</th>
                                 <th>E-mail</th>
-                                <th>Document</th>
+                                <th>CPF</th>
                                 <th>&nbsp;</th>
                                 <th>&nbsp;</th>
                             </tr>
