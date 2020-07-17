@@ -5,7 +5,7 @@
   <a href="mailto:marlon.concenza@gmail.com" target="_blank" ><img alt="Email" src="https://img.shields.io/badge/Email--%23F8952D?style=social&logo=gmail"></a>
 </p>
 
-![Preview](https://github.com/marlonconcenza/crud-bootstrap/blob/master/.github/preview.png"Preview")
+![Preview](https://github.com/marlonconcenza/crud-bootstrap/blob/master/.github/preview.png "Preview")
 
 ## Sobre este projeto
 
